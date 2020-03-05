@@ -53,7 +53,9 @@ const Saved = ({
       .catch(err => console.error(err));
   }, []);
 
-  const removeFavorite = async id => {
+  const removeFavorite = async (e, id) => {
+    e.preventDefault();
+    e.stopPropagation();
     try {
       await axiosWithAuth().delete(`songs/${id}`);
       setSavedSongs(savedSongs.filter(song => song.backend_id !== id));
@@ -133,7 +135,7 @@ const Saved = ({
                       <SongName>{song.name}</SongName>
                     </Artist>
                   </div>
-                  <Fav saved onClick={() => removeFavorite(song.backend_id)}>
+                  <Fav saved onClick={e => removeFavorite(e, song.backend_id)}>
                     <i className="fas fa-heart"></i>
                   </Fav>
                 </FavCard>
