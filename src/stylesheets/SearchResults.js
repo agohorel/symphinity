@@ -56,7 +56,7 @@ export const Artist = styled.div`
   @media (max-width: 768px) {
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden;
+    overflow: auto;
   }
 `;
 

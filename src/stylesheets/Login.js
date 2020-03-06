@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import bg from '../assets/symphonity-bg.jpg';
 
 export const Form = styled.form`
-    width: 480px;
+    width: 50vw;
     margin: 0 auto;
     border-radius: 5px;
     padding: 30px 80px;

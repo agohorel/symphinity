@@ -3,15 +3,25 @@ import bg from "../assets/symphonity-bg.jpg";
 import colors from "./Colors";
 
 export const Form = styled.form`
-  width:100%;
-`
+  width: 100%;
+`;
 
 export const FormDiv = styled.div`
   width: 480px;
+  max-width: 50vw;
   margin: 0 auto;
   border-radius: 5px;
   padding: 30px 80px;
   background-color: #121212;
+  transition: 0.2s ease-out all;
+
+  @media (max-width: 900px) {
+    padding: 25px 50px;
+  }
+
+  @media (max-width: 600px) {
+    max-width: 90vw;
+  }
 `;
 
 export const FormLabel = styled.label`
@@ -27,8 +37,8 @@ export const FormInput = styled.input`
   border: 1px solid #121212;
   background-color: #282828;
   margin: 5px 0 0;
-  color: #FFF;
-  padding: .5rem;
+  color: #fff;
+  padding: 0.5rem;
 `;
 
 export const FormButton = styled.button`
@@ -71,7 +81,7 @@ export const LinkButton = styled.a`
 export const FormContainer = styled.div`
   width: 100%;
   position: absolute;
-  top:64px;
+  top: 64px;
   height: calc(100vh - 64px);
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
     url(${bg});
