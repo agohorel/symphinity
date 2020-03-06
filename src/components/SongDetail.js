@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import styled from "styled-components";
 import axios from "axios";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
@@ -194,13 +195,12 @@ export const SongDetail = ({
           <h2>You might like</h2>
 
           {!recommendedSongs.length && (
-            <Loader
+            <StyledLoader
               type="Audio"
               color="#1DB954"
               height={200}
               width={200}
-              style={{ marginLeft: "25%", marginTop: "10rem" }}
-            ></Loader>
+            ></StyledLoader>
           )}
 
           {recommendedSongs.map(song => (
@@ -232,3 +232,16 @@ export const SongDetail = ({
     </>
   );
 };
+
+const StyledLoader = styled(Loader)`
+  margin-left: 25%;
+  margin-top: 10rem;
+
+  @media (max-width: 900px) {
+    margin-left: 30%;
+  }
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
+`;
