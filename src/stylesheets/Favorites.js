@@ -28,6 +28,7 @@ export const FavCardLink = styled(Link)`
 
   @media (max-width: 900px) {
     width: calc(100% - 2rem);
+    margin: 1rem 1rem 0 1rem;
   }
 `;
 
@@ -46,7 +47,7 @@ export const FavCard = styled.div`
   justify-content: space-between;
   @media (max-width: 768px) {
     margin: 10px auto;
-    width: 80%;
+    width: 100%;
   }
 
   div {
@@ -90,9 +91,14 @@ export const Radar = styled.div`
   height: auto;
   padding: 40px;
   color: white;
+
   @media (max-width: 1200px) {
     width: 100%;
     margin-bottom: 20px;
+  }
+
+  @media (max-width: 900px) {
+    padding: 20px;
   }
 
   img {

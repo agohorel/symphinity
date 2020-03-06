@@ -54,7 +54,6 @@ export const Artist = styled.div`
   vertical-align: top;
 
   @media (max-width: 768px) {
-    width: 70%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -81,8 +80,8 @@ export const ArtistName = styled.p`
 
 export const SongName = styled.p`
   font-weight: 100;
-  font-size: 1.2rem;
-  margin: 5px 0;
+  font-size: 1rem;
+  margin: 0;
   @media (max-width: 768px) {
     text-overflow: ellipsis;
   }
