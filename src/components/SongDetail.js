@@ -43,15 +43,11 @@ export const SongDetail = ({
     // prevent sending empty requests to DS API
     if (Object.keys(songData).length) {
       axios
-        .post(
-          "https://cors-anywhere.herokuapp.com/https://spotify-flow-ds.herokuapp.com/input",
-          songData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        .post("https://symphinity-ds-proxy.herokuapp.com/input", songData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
           setSongRadarGraph(res.data.radar_chart);
           setRecommendedSongIDs(res.data.recommended_song_ids);
