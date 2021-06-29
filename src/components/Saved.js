@@ -9,48 +9,50 @@ import {
   FavCard,
   Fav,
   FavCardLink,
-  FavsContainer
+  FavsContainer,
 } from "../stylesheets/Favorites";
 import {
   Artist,
   Thumb,
   ThumbContainer,
   SongName,
-  ArtistName
+  ArtistName,
 } from "../stylesheets/SearchResults";
 
 const Saved = ({
   setSelectedSong,
   setSearchTerm,
   setSearchResults,
-  setSongData
+  setSongData,
 }) => {
-  let backendIDs;
   const [savedSongs, setSavedSongs] = useState([]);
 
   useEffect(() => {
+    let backendIDs;
     axiosWithAuth()
       .get("/songs")
-      .then(res => {
+      .then((res) => {
         let dict = {};
-        res.data.songs.forEach(song => (dict[song.spotify_id] = song.song_id));
+        res.data.songs.forEach(
+          (song) => (dict[song.spotify_id] = song.song_id)
+        );
         backendIDs = dict;
         return res.data.songs;
       })
-      .then(songs => {
-        const idString = songs.map(song => song.spotify_id).toString();
+      .then((songs) => {
+        const idString = songs.map((song) => song.spotify_id).toString();
         spotifyAPI()
           .get(`/tracks/?ids=${idString}`)
-          .then(res => {
-            res.data.tracks.forEach(track => {
+          .then((res) => {
+            res.data.tracks.forEach((track) => {
               track.backend_id = backendIDs[track.id];
             });
 
             return setSavedSongs(res.data.tracks);
           })
-          .catch(err => console.error(err));
+          .catch((err) => console.error(err));
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   }, []);
 
   const removeFavorite = async (e, id) => {
@@ -58,14 +60,14 @@ const Saved = ({
     e.stopPropagation();
     try {
       await axiosWithAuth().delete(`songs/${id}`);
-      setSavedSongs(savedSongs.filter(song => song.backend_id !== id));
+      setSavedSongs(savedSongs.filter((song) => song.backend_id !== id));
     } catch (error) {
       console.error(error);
     }
   };
 
   const updateSong = useCallback(
-    async song => {
+    async (song) => {
       setSelectedSong(song);
       setSearchResults([]);
       setSearchTerm({ search: "" });
@@ -86,7 +88,7 @@ const Saved = ({
           valence,
           tempo,
           duration_ms,
-          time_signature
+          time_signature,
         } = res.data;
 
         setSongData({
@@ -104,7 +106,7 @@ const Saved = ({
           valence,
           tempo,
           duration_ms,
-          time_signature
+          time_signature,
         });
       } catch (err) {
         console.error(err);
@@ -118,7 +120,7 @@ const Saved = ({
       <Sidebar setSelectedSong={setSelectedSong}></Sidebar>
       <Main>
         <FavsContainer>
-          {savedSongs.map(song => {
+          {savedSongs.map((song) => {
             return (
               <FavCardLink
                 key={song.id}
@@ -135,7 +137,10 @@ const Saved = ({
                       <SongName>{song.name}</SongName>
                     </Artist>
                   </div>
-                  <Fav saved onClick={e => removeFavorite(e, song.backend_id)}>
+                  <Fav
+                    saved
+                    onClick={(e) => removeFavorite(e, song.backend_id)}
+                  >
                     <i className="fas fa-heart"></i>
                   </Fav>
                 </FavCard>
