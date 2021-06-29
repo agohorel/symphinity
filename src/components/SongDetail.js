@@ -9,7 +9,7 @@ import {
   Frame,
   AddToFav,
   Similar,
-  SimilarCard
+  SimilarCard,
 } from "../stylesheets/SongDetails";
 
 import {
@@ -17,7 +17,7 @@ import {
   ThumbContainer,
   Artist,
   ArtistName,
-  SongName
+  SongName,
 } from "../stylesheets/SearchResults";
 
 import { Notification } from "./Notification";
@@ -32,7 +32,7 @@ export const SongDetail = ({
   setSongData,
   setSearchResults,
   setSearchTerm,
-  selectedSong
+  selectedSong,
 }) => {
   const [recommendedSongIDs, setRecommendedSongIDs] = useState([]);
   const [recommendedSongs, setRecommendedSongs] = useState([]);
@@ -48,28 +48,22 @@ export const SongDetail = ({
           songData,
           {
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           setSongRadarGraph(res.data.radar_chart);
+          setRecommendedSongIDs(res.data.recommended_song_ids);
         })
-        .catch(err => console.error(err));
-
-      axios
-        .get(
-          `https://cors-anywhere.herokuapp.com/https://spotify-ml-component.herokuapp.com/api/v1/recommend/${song.id}`
-        )
-        .then(res => setRecommendedSongIDs(res.data.data))
-        .catch(err => console.error(err));
+        .catch((err) => console.error(err));
     }
   }, [songData, selectedSong, song.id]);
 
   useEffect(() => {
     let listOfIDs = "";
     if (recommendedSongIDs !== undefined) {
-      recommendedSongIDs.map(id => (listOfIDs += `${id},`));
+      recommendedSongIDs.map((id) => (listOfIDs += `${id},`));
       listOfIDs = listOfIDs.substring(0, listOfIDs.length - 1);
     }
 
@@ -77,13 +71,13 @@ export const SongDetail = ({
     if (listOfIDs.length) {
       spotifyAPI()
         .get(`tracks/?=ids=${listOfIDs}`)
-        .then(res => setRecommendedSongs(res.data.tracks))
-        .catch(err => console.error(err));
+        .then((res) => setRecommendedSongs(res.data.tracks))
+        .catch((err) => console.error(err));
     }
   }, [recommendedSongIDs]);
 
   const updateSong = useCallback(
-    async song => {
+    async (song) => {
       setSelectedSong(song);
       setSearchResults([]);
       setSearchTerm({ search: "" });
@@ -104,7 +98,7 @@ export const SongDetail = ({
           valence,
           tempo,
           duration_ms,
-          time_signature
+          time_signature,
         } = res.data;
 
         setSongData({
@@ -122,7 +116,7 @@ export const SongDetail = ({
           valence,
           tempo,
           duration_ms,
-          time_signature
+          time_signature,
         });
       } catch (err) {
         console.error(err);
@@ -135,7 +129,7 @@ export const SongDetail = ({
     e.stopPropagation();
     try {
       const res = await axiosWithAuth().post("songs", {
-        spotify_id: songID
+        spotify_id: songID,
       });
       setNotificationMsg(res.data.message);
 
@@ -161,7 +155,7 @@ export const SongDetail = ({
             allow="encrypted-media"
             title="spotifyPlayer"
           ></iframe>
-          <AddToFav onClick={e => addToFavorites(e, song.id)}>
+          <AddToFav onClick={(e) => addToFavorites(e, song.id)}>
             <i className="far fa-heart"></i>
             <i className="fas fa-heart"></i>
             <h3>Add to Favorites</h3>
@@ -179,7 +173,7 @@ export const SongDetail = ({
                 width={200}
                 style={{
                   marginLeft: "calc(50% - 100px)",
-                  marginTop: "10rem"
+                  marginTop: "10rem",
                 }}
               ></Loader>
             )}
@@ -203,7 +197,7 @@ export const SongDetail = ({
             ></StyledLoader>
           )}
 
-          {recommendedSongs.map(song => (
+          {recommendedSongs.map((song) => (
             <SimilarCard
               key={song.id}
               onClick={() => {
@@ -221,7 +215,7 @@ export const SongDetail = ({
                   <SongName>{song.name}</SongName>
                 </Artist>
               </Similar>
-              <Fav onClick={e => addToFavorites(e, song.id)}>
+              <Fav onClick={(e) => addToFavorites(e, song.id)}>
                 <i className="far fa-heart"></i>
                 <i className="fas fa-heart"></i>
               </Fav>
